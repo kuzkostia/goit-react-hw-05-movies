@@ -1,68 +1,51 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'; // доступ до параметрів поточного URL
-import { fetchMovieCast } from '../../services/api'; // додаємо запит
-import {
-  CastHeader,
-  CastInfo,
-  CastList,
-  CastListItem,
-  CastName,
-  NoCastText,
-  Wrapper,
-} from './Cast.styled'; // додаємо стилі
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getCastMovie } from '../../services/getMovies';
+import { BASE_POSTER_URL, PLACEHOLDER } from 'utils/constants';
+import { ListItem, StyledList } from './Cast.module';
 
 const Cast = () => {
-  const { movieId } = useParams(); // додаємо параметр movieId
+  const { movieId } = useParams();
+
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
     const fetchCast = async () => {
       try {
-        const { cast } = await fetchMovieCast(movieId);
+        const cast = await getCastMovie(movieId);
         setCast(cast);
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        console.log(e);
       }
     };
-
     fetchCast();
   }, [movieId]);
 
   return (
-    <Wrapper>
-      <CastHeader>Cast</CastHeader> {/* додаємо заголовок */}
-      {/* додаємо перевірку на наявність акторів */}
-      {cast.length ? (
-        <CastList>
-          {cast.map(actor => (
-            <CastListItem className="cast-card" key={actor.id}>
-              {/* додаємо перевірку на наявність фото */}
-              {actor.profile_path ? (
-                <img
-                  src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-                  alt={`${actor.name} profile`}
-                />
-              ) : (
-                <img
-                  src={`https://via.placeholder.com/200x300?text=No+Image`}
-                  alt={`${actor.name} profile`}
-                />
-              )}
-
-              {/* додаємо інформацію про актора */}
-              <CastInfo>
-                <CastName>{actor.name}</CastName>
-                <p>Character: {actor.character}</p>
-              </CastInfo>
-            </CastListItem>
+    <>
+      {
+        <StyledList>
+          {cast.map(({ id, profile_path, original_name, character }) => (
+            <ListItem key={id}>
+              <img
+                src={`${
+                  profile_path
+                    ? BASE_POSTER_URL + profile_path
+                    : PLACEHOLDER + '?text=' + original_name
+                }`}
+                alt={original_name}
+              />
+              <p>
+                <span> Actor:</span> {original_name}
+              </p>
+              <p>
+                <span>Character:</span> {character}
+              </p>
+            </ListItem>
           ))}
-        </CastList>
-      ) : (
-        <NoCastText>
-          We don't have any information about the cast yet.
-        </NoCastText>
-      )}
-    </Wrapper>
+        </StyledList>
+      }
+    </>
   );
 };
 

@@ -1,23 +1,30 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom'; // додаємо компонент для рендерингу дочірніх компонентів
-import { LoadingIndicator } from './LoadingDots'; // додаємо індикатор завантаження
-import { StyledHeader, StyledNavLink } from './SharedLayout.styled'; // додаємо стилі
+import { Outlet, Link } from 'react-router-dom';
+import { Container, NavItem, NavList, Navigation } from './SharedLayout.module';
 
 const SharedLayout = () => {
   return (
-    <>
-      <StyledHeader>
-        <nav>
-          <StyledNavLink to="/">Home</StyledNavLink>
-          <StyledNavLink to="/movies">Movies</StyledNavLink>
-        </nav>
-      </StyledHeader>
-
-      {/* відкладення рендерингу дочірніх компонентів, поки не буде завантажено весь код */}
-      <Suspense fallback={<LoadingIndicator />}>
-        <Outlet /> {/* рендеринг дочірніх компонентів */}
+    <Container>
+      <header>
+        <Navigation>
+          <NavList>
+            <NavItem>
+              <Link to="/">
+                Home<span>.</span>
+              </Link>
+            </NavItem>
+            <NavItem>
+              <Link to="/movies">
+                Movies<span>.</span>
+              </Link>
+            </NavItem>
+          </NavList>
+        </Navigation>
+      </header>
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Outlet />
       </Suspense>
-    </>
+    </Container>
   );
 };
 
