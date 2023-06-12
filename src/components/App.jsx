@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { lazy, Suspense } from 'react'; // оновлюємо імпорти
+import { lazy, Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 const SharedLayout = lazy(() => import('./SharedLayout/SharedLayout'));
@@ -17,11 +17,7 @@ const Reviews = lazy(() => import('./Reviews/Reviews'));
 export const App = () => {
   return (
     <Router>
-      {' '}
-      {/* Замінюємо <Routes> на <Router> */}
       <Suspense fallback={<div>Loading...</div>}>
-        {' '}
-        {/* Додаємо <Suspense> */}
         <SharedLayout>
           <Routes>
             <Route path="/" element={<Home />} />
