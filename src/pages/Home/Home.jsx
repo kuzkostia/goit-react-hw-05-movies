@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { getTrendingMovies } from 'services/getMovies';
+import { getTrendingMovies } from '../../services/getMovies';
 
 import FilmsList from '../../components/FilmList/FilmList';
 
