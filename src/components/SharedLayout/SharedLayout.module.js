@@ -16,7 +16,7 @@ export const NavList = styled.ul`
   gap: 18px;
   padding: 14px;
 
-  background: blue;
+  background: rgba(255, 255, 255, 0.1);
   background-blend-mode: overlay;
   backdrop-filter: blur(50px);
   border-radius: 20px;
