@@ -72,12 +72,12 @@ const MoviesDetails = () => {
         <StyledList>
           <ListItem>
             <NavLink to="cast" state={location.state}>
-              Cast<span>.</span>
+              Cast
             </NavLink>
           </ListItem>
           <ListItem>
             <NavLink to="reviews" state={location.state}>
-              Reviews<span>.</span>
+              Reviews
             </NavLink>
           </ListItem>
         </StyledList>

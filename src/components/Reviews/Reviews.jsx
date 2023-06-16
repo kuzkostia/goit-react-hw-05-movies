@@ -20,7 +20,7 @@ const Reviews = () => {
   }, [movieId]);
 
   return reviews.length === 0 ? (
-    <h3>No Reviews.</h3>
+    <h3>No Reviews</h3>
   ) : (
     <StyledList>
       {reviews.map(({ id, author, content }) => (
